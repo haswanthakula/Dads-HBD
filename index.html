@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday Dad</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: url('https://images.unsplash.com/photo-1503676260728-1c00da094a0b') no-repeat center center fixed;
+  background-size: cover;
+  overflow-x: hidden;
+  color: white;
+}
+
+/* Dark overlay */
+.overlay {
+  background: rgba(0,0,0,0.65);
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+/* Fixed Header */
+.header {
+  position: fixed;
+  top: 20px;
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
+  letter-spacing: 2px;
+  font-weight: 400;
+  z-index: 10;
+}
+
+/* Sections */
+.section {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: 300;
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s ease;
+  position: relative;
+}
+
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Button */
+.lessonBtn {
+  margin-top: 30px;
+  padding: 12px 30px;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #ff6a00, #ee0979);
+  border: none;
+  color: white;
+  transition: 0.3s;
+}
+
+.lessonBtn:hover {
+  transform: scale(1.05);
+}
+
+/* Scroll Arrow */
+.arrow {
+  position: absolute;
+  bottom: 30px;
+  font-size: 28px;
+  animation: bounce 2s infinite;
+  opacity: 0.8;
+}
+
+@keyframes bounce {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(10px); }
+}
+
+/* Balloons */
+.balloon {
+  position: fixed;
+  top: -100px;
+  width: 40px;
+  height: 60px;
+  border-radius: 50%;
+  animation: fall linear infinite;
+  opacity: 0.8;
+  z-index: 0;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(120vh);
+  }
+}
+
+.big {
+  font-size: 28px;
+  font-weight: 400;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+
+<div class="header">
+  🎉 Happy Birthday Dad 🎉
+</div>
+
+<!-- Intro -->
+<div class="section visible">
+  <div>
+    <div id="text"></div>
+    <button class="lessonBtn" onclick="nextLine()">Next Lesson →</button>
+  </div>
+  <div class="arrow">⬇</div>
+</div>
+
+<!-- Scroll Sections -->
+<div class="section">
+  As a child, I saw rules.
+  <div class="arrow">⬇</div>
+</div>
+
+<div class="section">
+  Now I see protection.
+  <div class="arrow">⬇</div>
+</div>
+
+<div class="section">
+  As a child, I saw strictness.
+  <div class="arrow">⬇</div>
+</div>
+
+<div class="section">
+  Now I see love disguised as discipline.
+  <div class="arrow">⬇</div>
+</div>
+
+<!-- Final -->
+<div class="section big">
+  Your son is proud of you.<br><br>
+  Thank you for shaping me into the man I am.<br><br>
+  — From Haswanth
+</div>
+
+</div>
+
+<script>
+const lines = [
+  "I didn’t always understand you.",
+  "Sometimes I thought you were too strict.",
+  "But now I see your sacrifices.",
+  "Now I see your love.",
+  "Now I see your strength."
+];
+
+let index = 0;
+
+function nextLine() {
+  if (index < lines.length) {
+    document.getElementById("text").innerText = lines[index];
+    index++;
+  } else {
+    document.querySelector(".lessonBtn").style.display = "none";
+  }
+}
+
+/* Scroll animation */
+const sections = document.querySelectorAll(".section");
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
+  });
+}, { threshold: 0.3 });
+
+sections.forEach(section => {
+  observer.observe(section);
+});
+
+/* Balloons */
+function createBalloon() {
+  const balloon = document.createElement("div");
+  balloon.classList.add("balloon");
+
+  const colors = ["#ff4d4d","#4da6ff","#66ff66","#ffcc00","#ff66cc"];
+  balloon.style.background = colors[Math.floor(Math.random()*colors.length)];
+  balloon.style.left = Math.random() * window.innerWidth + "px";
+  balloon.style.animationDuration = (6 + Math.random()*4) + "s";
+
+  document.body.appendChild(balloon);
+
+  setTimeout(() => balloon.remove(), 10000);
+}
+
+setInterval(createBalloon, 800);
+</script>
+
+</body>
+</html>
